@@ -1,8 +1,7 @@
-const express = require('express');
+import express from 'express';
+import mongoose from 'mongoose';
+
 const app = new express();
-const path = require('path');
-const ejs = require('ejs');
-const mongoose = require('mongoose');
 
 mongoose.connect = connect('mongodb://localhost/my_database', {useNewUrlParser: true});
 
