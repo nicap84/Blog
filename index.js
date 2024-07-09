@@ -1,9 +1,9 @@
-import express from 'express';
-import mongoose from 'mongoose';
+const express = require('express');
+const mongoose = require('mongoose');
 
 const app = new express();
 
-mongoose.connect = connect('mongodb://localhost/my_database', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/my_database', {useNewUrlParser: true});
 
 app.set('view engine', 'ejs');  
 
