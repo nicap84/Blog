@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-
+const mongoose = require('mongoose');
 const blogPostSchema = new mongoose.Schema({
     title: String,
     body: String
