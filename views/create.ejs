@@ -5,12 +5,12 @@
         <!-- Navigation-->
         <%- include('layouts/navbar'); -%>
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">
+        <header class="masthead" style="background-image: url('/assets/img/contact-bg.jpg')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="page-heading">
-                            <h1>Contact Me</h1>
+                            <h1>Create New post</h1>
                             <span class="subheading">Have questions? I have answers.</span>
                         </div>
                     </div>
@@ -33,9 +33,9 @@
                             <!-- to get an API token!-->
                             <form id="contactForm" data-sb-form-api-token="API_TOKEN">
                                 <div class="form-floating">
-                                    <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                    <label for="name">Name</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                    <input class="form-control" id="title" type="text" placeholder="Enter the title..." data-sb-validations="required" />
+                                    <label for="tite">Title</label>
+                                    <div class="invalid-feedback" data-sb-feedback="title:required">A title is required.</div>
                                 </div>
                                 <div class="form-floating">
                                     <input class="form-control" id="email" type="email" placeholder="Enter your email..." data-sb-validations="required,email" />
