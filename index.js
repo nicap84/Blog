@@ -19,8 +19,9 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-app.get('/', (req, res) => {
-    res.render('index');
+app.get('/', async(req, res) => {
+    const blogPostEntries = await blogPost.find({});
+    res.render('index', {blogPosts: blogPostEntries});
 });
 
 app.get('/about', (req, res) => {
@@ -39,11 +40,11 @@ app.get('/post/new', (req, res) => {
     res.render('create');
 })
 
-app.post('/post/new', (req, res) => {
+app.post('/post/new', async (req, res) => {
     const { title, body } = req.body;
     if (!title || !body) {
         return res.status(400).send('Title and body are required.');
     }
-    blogPost.create(req.body);
+    await blogPost.create(req.body);
     res.redirect('/'); 
 })
