@@ -36,6 +36,11 @@ app.get('/post', (req, res) => {
     res.render('post');
 })
 
+app.get('/post/:id', async (req, res) => {
+    const blogpostEntry = await blogPost.findById(req.params.id);
+    res.render('post', {blogPost: blogpostEntry});
+})
+
 app.get('/post/new', (req, res) => {
     res.render('create');
 })
@@ -48,3 +53,4 @@ app.post('/post/new', async (req, res) => {
     await blogPost.create(req.body);
     res.redirect('/'); 
 })
+
