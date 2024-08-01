@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const blogPost = require('./models/blogPost');
+const fileUpload = require('express-fileupload');
+const path = require('path');
 
 const app = new express();
 
@@ -18,6 +20,7 @@ app.listen(4000, () => {
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(fileUpload());
 
 app.get('/', async(req, res) => {
     const blogPostEntries = await blogPost.find({});
@@ -45,7 +48,14 @@ app.post('/post/new', async (req, res) => {
     if (!title || !body) {
         return res.status(400).send('Title and body are required.');
     }
-    await blogPost.create({title, body, userName: 'maria'});
+    const image = req.files.image;
+    const pathToUpload = path.resolve(__dirname,'public/img',image.name);
+    await image.mv(pathToUpload, async(error) => {
+        if (error) {
+            return res.status(400).send(`The image can't be upload. Error: ${error}`)
+        }
+        await blogPost.create({title, body, userName: 'maria'});
+    });
     res.redirect('/'); 
 })
 
