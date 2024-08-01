@@ -36,11 +36,6 @@ app.get('/post', (req, res) => {
     res.render('post');
 })
 
-app.get('/post/:id', async (req, res) => {
-    const blogpostEntry = await blogPost.findById(req.params.id);
-    res.render('post', {blogPost: blogpostEntry});
-})
-
 app.get('/post/new', (req, res) => {
     res.render('create');
 })
@@ -50,7 +45,15 @@ app.post('/post/new', async (req, res) => {
     if (!title || !body) {
         return res.status(400).send('Title and body are required.');
     }
-    await blogPost.create(req.body);
+    await blogPost.create({title, body, userName: 'maria'});
     res.redirect('/'); 
+})
+
+app.get('/post/:id', async (req, res) => {
+    if (req.params.id) {
+        const blogpostEntry = await blogPost.findById(req.params.id);
+        return res.render('post', {blogPost: blogpostEntry});
+    }
+    return es.render('post');
 })
 

@@ -12,6 +12,11 @@
                         <div class="post-heading">
                             <h1><%= blogPost.title%></h1>
                             <h2 class="subheading"><%= blogPost.body%></h2>
+                            <p class="post-meta">
+                                Posted by
+                                <a href="#!"><%= blogPost.userName %></a>
+                                on <%= blogPost.postDate.toString() %>
+                            </p>
                         </div>
                     </div>
                 </div>
