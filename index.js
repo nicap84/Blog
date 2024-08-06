@@ -54,7 +54,7 @@ app.post('/post/new', async (req, res) => {
         if (error) {
             return res.status(400).send(`The image can't be upload. Error: ${error}`)
         }
-        await blogPost.create({title, body, userName: 'maria'});
+        await blogPost.create({title, body, userName: 'maria', image: `/img/${image.name}`});
     });
     res.redirect('/'); 
 })

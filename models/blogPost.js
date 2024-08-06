@@ -6,7 +6,8 @@ const blogPostSchema = new mongoose.Schema({
     postDate: {
         type: Date,
         default: new Date()
-    }
+    },
+    image: String,
 });
 
 const blogPostModel = mongoose.model('BlogPost', blogPostSchema);
