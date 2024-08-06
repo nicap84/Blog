@@ -4,4 +4,7 @@
 # Ignore .vscode files
 .vscode/
 
+#ignore img
+**/public/img
+
 *.pdf
