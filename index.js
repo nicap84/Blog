@@ -3,8 +3,12 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import { blogPostModel } from './models/blogPost.js';
 import fileUpload from 'express-fileupload';
-import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
 import newPostController from './controllers/newPost.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = new express();
 
@@ -56,7 +60,7 @@ app.get('/post/new', newPostController);
 app.post('/post/create', async (req, res) => {
     const { title, body } = req.body;
     const { image } = req.files;
-    const pathToUpload = path.resolve(__dirname,'public/img',image.name);
+    const pathToUpload = resolve(__dirname,'public/img',image.name);
     await image.mv(pathToUpload, async(error) => {
         if (error) {
             return res.status(400).send(`The image can't be upload. Error: ${error}`)
