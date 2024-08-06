@@ -17,10 +17,21 @@ app.listen(4000, () => {
     console.log('App listening on port 4000');
 });
 
+const validationMiddleware = (req, res, next) => {
+    const { title, body } = req.body;
+    const { image }  = req.files || '';
+    if (!title || !body || !image) {
+        // return res.status(400).send('Title, body and image are required.');
+        return res.redirect('/post/new'); 
+    }
+    next();
+}
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(fileUpload());
+app.use('/post/create', validationMiddleware);
 
 app.get('/', async(req, res) => {
     const blogPostEntries = await blogPost.find({});
@@ -43,12 +54,9 @@ app.get('/post/new', (req, res) => {
     res.render('create');
 })
 
-app.post('/post/new', async (req, res) => {
+app.post('/post/create', async (req, res) => {
     const { title, body } = req.body;
-    if (!title || !body) {
-        return res.status(400).send('Title and body are required.');
-    }
-    const image = req.files.image;
+    const { image } = req.files;
     const pathToUpload = path.resolve(__dirname,'public/img',image.name);
     await image.mv(pathToUpload, async(error) => {
         if (error) {
