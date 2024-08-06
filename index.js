@@ -1,14 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import { blogPostModel } from './models/blogPost.js';
 import fileUpload from 'express-fileupload';
-import { fileURLToPath } from 'url';
-import { dirname, resolve } from 'path';
-import newPostController from './controllers/newPost.js';
+import { newBlogPost, createNewBlogPost, findAll, 
+    aboutController, contactController, 
+    findById} from './controllers/index.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const app = new express();
 
@@ -38,43 +35,15 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(fileUpload());
 app.use('/post/create', validationMiddleware);
 
-app.get('/', async(req, res) => {
-    const blogPostEntries = await blogPostModel.find({});
-    res.render('index', {blogPosts: blogPostEntries});
-});
+app.get('/', findAll);
 
-app.get('/about', (req, res) => {
-    res.render('about');
-});
+app.get('/about', aboutController);
 
-app.get('/contact', (req, res) => {
-    res.render('contact');
-})
+app.get('/contact', contactController);
 
-app.get('/post', (req, res) => {
-    res.render('post');
-})
+app.get('/post/new', newBlogPost);
 
-app.get('/post/new', newPostController);
+app.post('/post/create', createNewBlogPost)
 
-app.post('/post/create', async (req, res) => {
-    const { title, body } = req.body;
-    const { image } = req.files;
-    const pathToUpload = resolve(__dirname,'public/img',image.name);
-    await image.mv(pathToUpload, async(error) => {
-        if (error) {
-            return res.status(400).send(`The image can't be upload. Error: ${error}`)
-        }
-        await blogPostModel.create({title, body, userName: 'maria', image: `/img/${image.name}`});
-    });
-    res.redirect('/'); 
-})
-
-app.get('/post/:id', async (req, res) => {
-    if (req.params.id) {
-        const blogpostEntry = await blogPostModel.findById(req.params.id);
-        return res.render('post', {blogPost: blogpostEntry});
-    }
-    return es.render('post');
-})
+app.get('/post/:id', findById)
 
