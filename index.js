@@ -1,9 +1,10 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const blogPost = require('./models/blogPost');
-const fileUpload = require('express-fileupload');
-const path = require('path');
+import express from 'express';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import { blogPostModel } from './models/blogPost.js';
+import fileUpload from 'express-fileupload';
+import path from 'path';
+import newPostController from './controllers/newPost.js';
 
 const app = new express();
 
@@ -34,7 +35,7 @@ app.use(fileUpload());
 app.use('/post/create', validationMiddleware);
 
 app.get('/', async(req, res) => {
-    const blogPostEntries = await blogPost.find({});
+    const blogPostEntries = await blogPostModel.find({});
     res.render('index', {blogPosts: blogPostEntries});
 });
 
@@ -50,9 +51,7 @@ app.get('/post', (req, res) => {
     res.render('post');
 })
 
-app.get('/post/new', (req, res) => {
-    res.render('create');
-})
+app.get('/post/new', newPostController);
 
 app.post('/post/create', async (req, res) => {
     const { title, body } = req.body;
@@ -62,14 +61,14 @@ app.post('/post/create', async (req, res) => {
         if (error) {
             return res.status(400).send(`The image can't be upload. Error: ${error}`)
         }
-        await blogPost.create({title, body, userName: 'maria', image: `/img/${image.name}`});
+        await blogPostModel.create({title, body, userName: 'maria', image: `/img/${image.name}`});
     });
     res.redirect('/'); 
 })
 
 app.get('/post/:id', async (req, res) => {
     if (req.params.id) {
-        const blogpostEntry = await blogPost.findById(req.params.id);
+        const blogpostEntry = await blogPostModel.findById(req.params.id);
         return res.render('post', {blogPost: blogpostEntry});
     }
     return es.render('post');

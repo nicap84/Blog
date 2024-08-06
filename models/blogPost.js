@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const blogPostSchema = new mongoose.Schema({
     title: String,
     body: String,
@@ -10,6 +10,4 @@ const blogPostSchema = new mongoose.Schema({
     image: String,
 });
 
-const blogPostModel = mongoose.model('BlogPost', blogPostSchema);
-
-module.exports = blogPostModel;
+export const blogPostModel = mongoose.model('BlogPost', blogPostSchema);
