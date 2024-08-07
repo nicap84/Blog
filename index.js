@@ -5,6 +5,7 @@ import fileUpload from 'express-fileupload';
 import { newBlogPost, createNewBlogPost, findAll, 
     aboutController, contactController, 
     findById} from './controllers/index.js';
+import { validationMiddleware } from './middlewares/validationMiddleware.js';    
 
 
 const app = new express();
@@ -19,15 +20,7 @@ app.listen(4000, () => {
     console.log('App listening on port 4000');
 });
 
-const validationMiddleware = (req, res, next) => {
-    const { title, body } = req.body;
-    const { image }  = req.files || '';
-    if (!title || !body || !image) {
-        // return res.status(400).send('Title, body and image are required.');
-        return res.redirect('/post/new'); 
-    }
-    next();
-}
+
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
