@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import fileUpload from 'express-fileupload';
 import { newBlogPost, createNewBlogPost, findAll, 
     aboutController, contactController, 
-    findById, newUser} from './controllers/index.js';
+    findById, newUser, register} from './controllers/index.js';
 import { validationMiddleware } from './middlewares/validationMiddleware.js';    
 
 
@@ -19,8 +19,6 @@ app.set('view engine', 'ejs');
 app.listen(4000, () => {
     console.log('App listening on port 4000');
 });
-
-
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -40,5 +38,7 @@ app.post('/post/create', createNewBlogPost)
 
 app.get('/post/:id', findById)
 
-app.get('/auth/register', newUser);
+app.get('/auth/register', register);
+
+app.post('/users/register', newUser);
 

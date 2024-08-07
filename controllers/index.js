@@ -1,6 +1,7 @@
-import { newBlogPost, createNewBlogPost } from './newPostController.js';
+import { newBlogPost, createNewBlogPost } from './postsController.js';
 import { findAll, findById } from './findBlogPostsController.js';
 import { aboutController, contactController } from './utilsController.js';
-import { newUser } from './newUser.js';
+import { newUser, register } from './usersController.js';
 
-export { newBlogPost, createNewBlogPost, findAll, findById, aboutController, contactController, newUser };
+export { newBlogPost, createNewBlogPost, findAll, findById, 
+    aboutController, contactController, newUser, register };
