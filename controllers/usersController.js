@@ -22,12 +22,14 @@ export const register = (req, res) => {
  export const loginUser = async (req, res) => {
     try {
       const { userName, password } = req.body;
-      // Refactor this part
+      // TODO: Refactor this part
       const user =  await userModel.findOne({userName});
       if (user) {
         const same = await bcrypt.compare(password, user.password);
         if (same) {
           res.redirect('/');
+        } else {
+          throw new Error ('Incorrect password');
         }
       } else {
         throw new Error ('Incorrect user');
