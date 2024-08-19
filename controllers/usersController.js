@@ -1,4 +1,5 @@
 import { userModel } from "../models/user.js";
+import bcrypt from "bcrypt";
 
 export const register = (req, res) => {
     res.render('register');
@@ -14,6 +15,24 @@ export const register = (req, res) => {
     }
  }
 
- export const login = async (req, res) => {
+ export const login = (req, res) => {
     res.render('login');
  }
+
+ export const loginUser = async (req, res) => {
+    try {
+      const { userName, password } = req.body;
+      // Refactor this part
+      const user =  await userModel.findOne({userName});
+      if (user) {
+        const same = await bcrypt.compare(password, user.password);
+        if (same) {
+          res.redirect('/');
+        }
+      } else {
+        throw new Error ('Incorrect user');
+      }          
+    } catch (error){
+      res.status(409).send(error);
+    }
+ }  

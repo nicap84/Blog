@@ -4,7 +4,8 @@ import bodyParser from 'body-parser';
 import fileUpload from 'express-fileupload';
 import { newBlogPost, createNewBlogPost, findAll, 
     aboutController, contactController, 
-    findById, newUser, register, login } from './controllers/index.js';
+    findById, newUser, register, login, 
+    loginUser} from './controllers/index.js';
 import { validationMiddleware } from './middlewares/validationMiddleware.js';    
 
 
@@ -43,4 +44,7 @@ app.get('/auth/register', register);
 app.post('/users/register', newUser);
 
 app.get('/auth/login', login);
+
+app.post('/users/login', loginUser);
+
 
