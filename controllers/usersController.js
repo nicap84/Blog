@@ -13,3 +13,7 @@ export const register = (req, res) => {
       res.status(409).send(error);
     }
  }
+
+ export const login = async (req, res) => {
+    res.render('login');
+ }
