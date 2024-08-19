@@ -2,8 +2,15 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
-    userName: String,
-    password: String,
+    userName: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password:{
+        type: String,
+        required: true
+    }
 });
 
 userSchema.pre('save', function(next){

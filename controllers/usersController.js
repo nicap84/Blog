@@ -9,7 +9,7 @@ export const register = (req, res) => {
     try {
       await userModel.create({ userName, password});
       res.redirect('/');     
-    }catch(erro) {
+    }catch(error) {
       res.status(409).send(error);
     }
  }
