@@ -60,4 +60,9 @@ app.get('/auth/login', redirectIfAuthenticatedMiddleware, login);
 
 app.post('/users/login', redirectIfAuthenticatedMiddleware, loginUser);
 
+app.get('/auth/logout', (req, res, next) => {
+    req.session.destroy();
+    res.redirect('/');
+})
+
 
