@@ -6,7 +6,7 @@ import { newBlogPost, createNewBlogPost, findAll,
     aboutController, contactController, 
     findById, newUser, register, login, 
     loginUser} from './controllers/index.js';
-import { validationMiddleware, authMiddleware } from './middlewares/index.js';    
+import { validationMiddleware, authMiddleware, redirectIfAuthenticatedMiddleware } from './middlewares/index.js';    
 import session from 'express-session';
 
 
@@ -45,12 +45,12 @@ app.post('/post/create', authMiddleware, createNewBlogPost)
 
 app.get('/post/:id', findById)
 
-app.get('/auth/register', register);
+app.get('/auth/register', redirectIfAuthenticatedMiddleware, register);
 
-app.post('/users/register', newUser);
+app.post('/users/register', redirectIfAuthenticatedMiddleware, newUser);
 
-app.get('/auth/login', login);
+app.get('/auth/login', redirectIfAuthenticatedMiddleware, login);
 
-app.post('/users/login', loginUser);
+app.post('/users/login', redirectIfAuthenticatedMiddleware, loginUser);
 
 

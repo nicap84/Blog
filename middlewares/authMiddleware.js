@@ -16,3 +16,10 @@ export const authMiddleware = async (req, res, next) => {
         throw new Error ('Authorization error :: ', error);
     }
 }
+
+export const redirectIfAuthenticatedMiddleware = (req, res, next) => {
+    if (req.session.userId){
+        return res.redirect('/');
+    }
+    next();
+}
