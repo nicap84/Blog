@@ -65,4 +65,8 @@ app.get('/auth/logout', (req, res, next) => {
     res.redirect('/');
 })
 
+app.use((req, res) => {
+    res.render('notFoundError');
+})
+
 
