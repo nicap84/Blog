@@ -27,6 +27,7 @@ export const register = (req, res) => {
       if (user) {
         const same = await bcrypt.compare(password, user.password);
         if (same) {
+          req.session.userId = user._id;
           res.redirect('/');
         } else {
           throw new Error ('Incorrect password');

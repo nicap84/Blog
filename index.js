@@ -6,7 +6,8 @@ import { newBlogPost, createNewBlogPost, findAll,
     aboutController, contactController, 
     findById, newUser, register, login, 
     loginUser} from './controllers/index.js';
-import { validationMiddleware } from './middlewares/validationMiddleware.js';    
+import { validationMiddleware, authMiddleware } from './middlewares/index.js';    
+import session from 'express-session';
 
 
 const app = new express();
@@ -26,6 +27,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(fileUpload());
 app.use('/post/create', validationMiddleware);
+app.use(session({
+    secret: 'MariaRules',
+    resave: false,
+    saveUninitialized: true,
+}));
 
 app.get('/', findAll);
 
@@ -33,9 +39,9 @@ app.get('/about', aboutController);
 
 app.get('/contact', contactController);
 
-app.get('/post/new', newBlogPost);
+app.get('/post/new', authMiddleware, newBlogPost);
 
-app.post('/post/create', createNewBlogPost)
+app.post('/post/create', authMiddleware, createNewBlogPost)
 
 app.get('/post/:id', findById)
 

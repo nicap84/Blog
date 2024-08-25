@@ -1,3 +1,4 @@
-import { validationMiddleware } from "./validationMiddleware";
+import { validationMiddleware } from './validationMiddleware.js';
+import { authMiddleware} from './authMiddleware.js';
 
-export { validationMiddleware };
+export { validationMiddleware, authMiddleware };

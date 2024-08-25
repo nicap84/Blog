@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+// collection
 const blogPostSchema = new mongoose.Schema({
     title: String,
     body: String,

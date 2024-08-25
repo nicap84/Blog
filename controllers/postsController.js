@@ -7,7 +7,11 @@ const __dirname = dirname(__filename);
 const parentDir = dirname(__dirname);
 
 export const newBlogPost = (req, res) => {
-    res.render('create')
+    if (req.session.userId) {
+        return res.render('create');
+    } else {
+        return res.redirect('/auth/login');
+    }
 }
 
 export const createNewBlogPost = async (req, res) => {
