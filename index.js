@@ -1,3 +1,5 @@
+global.loggedIn = null;
+
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -32,6 +34,11 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
+
+app.use((req, res, next) => {
+    loggedIn = req.session.userId;
+    next();
+});
 
 app.get('/', findAll);
 
