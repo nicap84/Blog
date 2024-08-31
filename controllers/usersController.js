@@ -2,7 +2,11 @@ import { userModel } from "../models/user.js";
 import bcrypt from "bcrypt";
 
 export const register = (req, res) => {
-    res.render('register');
+    const errors = req.session.validationErrors;
+    delete req.session.validationErrors;
+    res.render('register', {
+      errors
+    });
  }
 
  export const newUser = async (req, res) => {
@@ -11,7 +15,8 @@ export const register = (req, res) => {
       await userModel.create({ userName, password});
       res.redirect('/');     
     }catch(error) {
-      res.status(409).send(error);
+      req.session.validationErrors = error.errors;
+      res.redirect('/auth/register');
     }
  }
 

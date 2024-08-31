@@ -21,6 +21,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-10 mx-auto">
+                        <% if (errors && !!Object.keys(errors).length){ %>
+                            <ul class="list-group"></ul>
+                            <% for (const error in errors) { %>
+                                <li class="list-group-item list-group-item-danger"><%= errors[error].message %></li>
+                            <% } %>
+                            </ul>
+                        <% } %>
                         <form action="/users/register" method="POST" enctype="multipart/form-data">
                             <div class="control-group">
                                 <div class="form-group floating-label-form-group controls">
