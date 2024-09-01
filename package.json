@@ -19,6 +19,7 @@
     "express-fileupload": "^1.5.1",
     "express-session": "^1.18.0",
     "mongoose": "^8.4.5",
+    "mongoose-unique-validator": "^5.0.1",
     "path": "^0.12.7"
   },
   "devDependencies": {
