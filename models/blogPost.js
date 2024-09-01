@@ -9,7 +9,11 @@ const blogPostSchema = new mongoose.Schema({
         type: String,
         required: [ true, 'Please provide a description']
     },    
-    userName: String,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User',
+        required: true
+    },
     postDate: {
         type: Date,
         default: new Date()

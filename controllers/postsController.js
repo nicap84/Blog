@@ -28,7 +28,7 @@ export const createNewBlogPost = async (req, res) => {
                 throw new Error(error);
             }
         });
-        await blogPostModel.create({title, body, userName: req.session.userName, image: `/img/${image.name}`});
+        await blogPostModel.create({title, body, userId: req.session.userId, image: `/img/${image.name}`});
         return res.redirect('/'); 
     } catch(error) {
         req.session.postValidationError = error.message;
