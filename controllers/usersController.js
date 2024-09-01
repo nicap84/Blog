@@ -33,6 +33,7 @@ export const register = (req, res) => {
         const same = await bcrypt.compare(password, user.password);
         if (same) {
           req.session.userId = user._id;
+          req.session.userName = userName;
           res.redirect('/');
         } else {
           throw new Error ('Incorrect password');

@@ -1,8 +1,14 @@
 import mongoose from 'mongoose';
 // collection
 const blogPostSchema = new mongoose.Schema({
-    title: String,
-    body: String,
+    title: {
+        type: String,
+        required: [true, 'Please provide a title'] 
+    },    
+    body: {
+        type: String,
+        required: [ true, 'Please provide a description']
+    },    
     userName: String,
     postDate: {
         type: Date,

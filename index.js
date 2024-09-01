@@ -28,7 +28,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(fileUpload());
-app.use('/post/create', validationMiddleware);
+//app.use('/post/create', validationMiddleware);
 app.use(session({
     secret: 'MariaRules',
     resave: false,

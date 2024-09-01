@@ -22,6 +22,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-10 mx-auto">
+                        <% if (errorMessage){ %>
+                            <ul class="list-group"></ul>
+                                <li class="list-group-item list-group-item-danger"><%= errorMessage %></li>
+                            </ul>
+                        <% } %>
                         <form action="/post/create" method="POST" enctype="multipart/form-data">
                             <div class="control-group">
                                 <div class="form-group floating-label-form-group controls">

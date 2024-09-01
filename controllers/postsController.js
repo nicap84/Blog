@@ -8,7 +8,11 @@ const parentDir = dirname(__dirname);
 
 export const newBlogPost = (req, res) => {
     if (req.session.userId) {
-        return res.render('create');
+        const errorMessage = req.session.postValidationError;
+        delete req.session.postValidationError;
+        return res.render('create', {
+            errorMessage
+        });
     } else {
         return res.redirect('/auth/login');
     }
@@ -16,13 +20,18 @@ export const newBlogPost = (req, res) => {
 
 export const createNewBlogPost = async (req, res) => {
     const { title, body } = req.body;
-    const { image } = req.files;
-    const pathToUpload = resolve(parentDir,'public/img',image.name);
-    await image.mv(pathToUpload, async(error) => {
-        if (error) {
-            return res.status(400).send(`The image can't be upload. Error: ${error}`)
-        }
-        await blogPostModel.create({title, body, userName: 'maria', image: `/img/${image.name}`});
+    const image = req.files?.image || undefined;
+    try {
+        const pathToUpload = resolve(parentDir,'public/img',image?.name);
+        await image.mv(pathToUpload, async(error) => {
+            if (error) {
+                throw new Error(error);
+            }
+        });
+        await blogPostModel.create({title, body, userName: req.session.userName, image: `/img/${image.name}`});
         return res.redirect('/'); 
-    });
+    } catch(error) {
+        req.session.postValidationError = error.message;
+        res.redirect('/post/new');
+    } 
 }
